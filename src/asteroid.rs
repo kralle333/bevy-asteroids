@@ -1,3 +1,4 @@
+use crate::helpers::random_range;
 use crate::transforming::Physics;
 use bevy::color::Color;
 use bevy::math::Vec2;
@@ -7,15 +8,13 @@ use bevy_prototype_lyon::entity::ShapeBundle;
 use bevy_prototype_lyon::geometry::GeometryBuilder;
 use bevy_prototype_lyon::shapes;
 use std::f32::consts::PI;
-use crate::helpers::random_range;
 
 #[derive(Component)]
 pub struct Asteroid {
     pub size: f32,
 }
 
-
-pub const MAX_SIZE: f32 = 50.0;
+pub const MAX_SIZE: f32 = 60.0;
 
 pub fn create_asteroid(commands: &mut Commands, size: f32, position: Vec2, vel: Vec2) {
     let mut points = vec![];

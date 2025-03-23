@@ -1,16 +1,33 @@
 use bevy::math::{Quat, Vec2, Vec3};
-use bevy::prelude::{Component, Query, Res, Time, Transform, Window};
+use bevy::prelude::{Component, Query, Res, Time, Transform, Window, With};
 use std::ops::Add;
 
 #[derive(Component, Default)]
 pub struct Physics {
     pub acc: Vec2,
-    pub(crate) vel: Vec2,
-    pub(crate) max_vel: Vec2,
-    pub(crate) rot_vel: f32,
+    pub vel: Vec2,
+    pub max_vel: Vec2,
+    pub rot_vel: f32,
 }
 
 impl Physics {
+    pub fn new() -> Physics {
+        Self {
+            acc: Vec2::ZERO,
+            vel: Vec2::ZERO,
+            max_vel: Vec2::ONE * 200.0,
+            rot_vel: 0.0,
+        }
+    }
+    pub fn new_with_vel(vel: Vec2) -> Physics {
+        Self {
+            acc: Vec2::ZERO,
+            vel,
+            max_vel: Vec2::ONE * 200.0,
+            rot_vel: 0.0,
+        }
+    }
+
     pub fn reset(&mut self) {
         self.acc = Vec2::ZERO;
         self.vel = Vec2::ZERO;
@@ -29,7 +46,7 @@ pub fn move_objects(time: Res<Time>, mut query: Query<(&mut Transform, &mut Phys
     }
 }
 
-pub fn wrap_objects(window: Query<&Window>, mut query: Query<&mut Transform>) {
+pub fn wrap_objects(window: Query<&Window>, mut query: Query<&mut Transform, With<Physics>>) {
     let window = window.single();
 
     for mut transform in &mut query {
