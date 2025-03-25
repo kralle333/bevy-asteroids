@@ -65,7 +65,7 @@ pub fn control_player(
 
         let angle = transform.rotation.to_euler(EulerRot::ZXY).0;
         let dir = Vec2::from_angle(angle);
-        if keys.pressed(KeyCode::Space) {
+        if keys.pressed(KeyCode::KeyZ) {
             physics.vel = physics.vel.add(dir * 2.0);
 
             if fastrand::bool() {
@@ -84,7 +84,7 @@ pub fn control_player(
             }
         }
 
-        if keys.just_pressed(KeyCode::ControlLeft) {
+        if keys.just_pressed(KeyCode::KeyX) {
             let bullet_dir = dir * 250.0;
             commands.spawn((
                 Sprite::from_color(Color::WHITE, Vec2::new(4.0, 4.0)),
